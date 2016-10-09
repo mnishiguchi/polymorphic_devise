@@ -1,0 +1,17 @@
+- provide(:title, 'Log in')
+
+/ NOTE: Unlike the User resource that is used for the Sign up page,
+/ the Session class is not an Active Record subclass.
+/ Therefore, we need to explicitly tell the form about class and url.
+/ Also, the Active Record error messages do not work for non-Active-Record classes.
+.grid
+  .col.col-1-5.offset
+  .col.col-3-5
+    h1 Log in
+    = simple_form_for(:session, url: login_path) do |f|
+      = f.input :email, error: false
+      = f.input :password, error: false
+      = f.submit "Log in", class: "btn"
+    p
+      ' New user?
+      = link_to "Sign up now!", signup_path

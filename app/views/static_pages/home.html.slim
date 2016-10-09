@@ -1,0 +1,16 @@
+.jumbotron
+  h2 Welcome
+  p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  
+  = link_to 'Continie with Twitter', '/auth/twitter', class: "btn btn-default"
+  = link_to 'Continie with Facebook', '/auth/facebook', class: "btn btn-default"
+  = link_to 'Continie with Google', '/auth/google_oauth2', class: "btn btn-default"
+
+.row
+  - 3.times do |i|
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading
+          h4 #{Faker::Hacker.verb.capitalize} #{Faker::Hacker.adjective} #{Faker::Hacker.noun}
+        .panel-body
+          p = Faker::Hacker.say_something_smart
