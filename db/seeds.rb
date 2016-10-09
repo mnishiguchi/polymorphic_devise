@@ -12,12 +12,12 @@
 # ---
 
 
-ManagementClient.destroy_all
-PropertyClient.destroy_all
-AccountExecutive.destroy_all
-Admin.destroy_all
-User.destroy_all
-Identity.destroy_all
+# ManagementClient.destroy_all
+# PropertyClient.destroy_all
+# AccountExecutive.destroy_all
+# Admin.destroy_all
+# User.destroy_all
+# Identity.destroy_all
 
 
 # ---
@@ -25,16 +25,16 @@ Identity.destroy_all
 # ---
 
 
-# Create a registered user.
-user = User.create!(
-  name: "Example user"
-)
-Identity.create!(
-  user:                  user,
-  email:                 "user@example.com",
-  password:              "password",
-  password_confirmation: "password"
-)
+# # Create a registered user.
+# user = User.create!(
+#   name: "Example user"
+# )
+# Identity.create!(
+#   user:                  user,
+#   email:                 "user@example.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )
 
 
 # ---
@@ -42,65 +42,65 @@ Identity.create!(
 # ---
 
 
-# Create a registered admin.
-admin = Admin.create!(
-  name: "Example admin"
-)
-Identity.create!(
-  backend_user:          admin,
-  email:                 "admin@example.com",
-  password:              "password",
-  password_confirmation: "password"
-)
-
-
-# Create a registered account_executive.
-account_executive = AccountExecutive.create!(
-  name: "Example account_executive"
-)
-Identity.create!(
-  backend_user:          account_executive,
-  email:                 "account_executive@example.com",
-  password:              "password",
-  password_confirmation: "password"
-)
-
-
-# Create a registered management_client that belongs to the account_executive.
-management_client = account_executive.management_clients.create!(
-  name: "Example management_client"
-)
-Identity.create!(
-  backend_user:          management_client,
-  email:                 "management_client@example.com",
-  password:              "password",
-  password_confirmation: "password"
-)
-
-
-# Create a registered property_client that belongs to the account_executive.
-property_client = account_executive.property_clients.create!(
-  name: "Example property_client"
-)
-Identity.create!(
-  backend_user:          property_client,
-  email:                 "property_client@example.com",
-  password:              "password",
-  password_confirmation: "password"
-)
-
-
-# ---
-# Create Masa as an admin who has a facebook account.
-# ---
-
-
-masatoshi = Admin.create!(
-  name: "Masatoshi"
-)
-Identity.create!(
-  backend_user:          masatoshi,
-  email:                 "nishiguchi.masa@gmail.com",
-  password:              "password",
-  password_confirmation: "password"
-)
+# # Create a registered admin.
+# admin = Admin.create!(
+#   name: "Example admin"
+# )
+# Identity.create!(
+#   backend_user:          admin,
+#   email:                 "admin@example.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )
+#
+#
+# # Create a registered account_executive.
+# account_executive = AccountExecutive.create!(
+#   name: "Example account_executive"
+# )
+# Identity.create!(
+#   backend_user:          account_executive,
+#   email:                 "account_executive@example.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )
+#
+#
+# # Create a registered management_client that belongs to the account_executive.
+# management_client = account_executive.management_clients.create!(
+#   name: "Example management_client"
+# )
+# Identity.create!(
+#   backend_user:          management_client,
+#   email:                 "management_client@example.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )
+#
+#
+# # Create a registered property_client that belongs to the account_executive.
+# property_client = account_executive.property_clients.create!(
+#   name: "Example property_client"
+# )
+# Identity.create!(
+#   backend_user:          property_client,
+#   email:                 "property_client@example.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )
+#
+#
+# # ---
+# # Create Masa as an admin who has a facebook account.
+# # ---
+#
+#
+# masatoshi = Admin.create!(
+#   name: "Masatoshi"
+# )
+# Identity.create!(
+#   backend_user:          masatoshi,
+#   email:                 "nishiguchi.masa@gmail.com",
+#   password:              "password",
+#   password_confirmation: "password"
+# )

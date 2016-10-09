@@ -9,6 +9,7 @@ gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-sass'
 gem 'coffee-rails', '~> 4.2'
+gem 'devise' # 4.2
 gem 'faker'
 gem 'font-awesome-rails'
 gem 'jbuilder', '~> 2.5'
