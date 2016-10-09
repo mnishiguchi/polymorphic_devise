@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
 
-  devise_for :identities, controllers: {
-    sessions:           "identities/sessions",
-    passwords:          "identities/passwords",
-    registrations:      "identities/registrations",
-    confirmations:      "identities/confirmations",
-    omniauth_callbacks: "identities/omniauth_callbacks"
-  }
+  # Authentication
+  devise_for :identities,
+    controllers: {
+      sessions:           "identities/sessions",
+      passwords:          "identities/passwords",
+      registrations:      "identities/registrations",
+      confirmations:      "identities/confirmations",
+      omniauth_callbacks: "identities/omniauth_callbacks"
+    },
+    # https://github.com/plataformatec/devise#configuring-routes
+    path: 'auth',
+    path_names: { sign_in: 'login', sign_out: 'logout' }
 
-  # Admin and business users
+  # Ask for email address after successful OAuth.
+  match "/identities/:id/finish_signup" => "identities#finish_signup",
+    via: [:get, :patch], as: :identity_finish_signup
+
+  # Frontend users
+  resources :users
+
+  # Backend users
   resources :admins, only: [:show]
   resources :account_executives, only: [:show]
   resources :management_clients, only: [:show]

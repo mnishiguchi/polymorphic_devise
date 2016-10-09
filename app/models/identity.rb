@@ -3,6 +3,9 @@
 # Table name: identities
 #
 #  id                     :integer          not null, primary key
+#  backend_user_type      :string
+#  backend_user_id        :integer
+#  user_id                :integer
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
@@ -42,6 +45,7 @@ class Identity < ApplicationRecord
   belongs_to :user,                            optional: true
   has_many :social_profiles
 
+  # To handle temporary emails.
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
@@ -86,7 +90,7 @@ class Identity < ApplicationRecord
   end
 
   # Merges and archives the old account.
-  def merge_old_account!(old_user)
+  def merge_old_identity!(old_user)
     self.merge_social_profiles(old_user) unless old_user.social_profiles.empty?
     old_user.archive!
 
@@ -97,61 +101,51 @@ class Identity < ApplicationRecord
     # TODO: What else do we want to merge?
   end
 
-
-  # ---
-  # Class methods
-  # ---
-
-
-  class << self
-
-    # Makes current_identity available via Identity.
-    # Set up in ApplicationController.
-    def current_identity=(identity)
-      Thread.current[:current_identity] = identity
-    end
-
-    # References current_identity via Identity.
-    def current_identity
-      Thread.current[:current_identity]
-    end
-
-    def from_omniauth(auth_hash)
-
-      # Search for the identity based on the authentication data.
-      # Obtain a SocialProfile object that corresponds to the authentication data.
-      profile = SocialProfile.find_or_create_from_omniauth(auth_hash)
-
-      # Obtain identity with the following precedence.
-      # 1. Logged-in user's identity
-      # 2. Identity with a registered profile.
-      identity = current_identity || profile.identity
-
-      # 3. Identity with verified email from omniauth.
-      unless identity
-        if auth_hash.info.email
-          identity  = Identity.where(email: auth_hash.info.email).first
-          profile.save_with_identity(identity)
-        end
-      end
-
-      # 4. New identity with a temp email.
-      unless identity
-        # If identity has no verified email, give the identity a temp email address.
-        # Later, we can detect unregistered email based on TEMP_EMAIL_PREFIX.
-        # Password is not required for identities with social_profiles therefore
-        # it is OK to generate a random password for them.
-        temp_email = "#{Identity::TEMP_EMAIL_PREFIX}-#{Devise.friendly_token[0,20]}.com"
-        identity = Identity.new(email:    auth.info.email || temp_email,
-                        password: Devise.friendly_token[0,20])
-        identity.tap do |u|
-          u.skip_confirmation!    # To postpone the delivery of confirmation email.
-          u.save(validate: false) # Save the temp email to database, skipping validation.
-          profile.save_with_identity(u)
-        end
-      end
-
-      identity
-    end
+  # Makes current_identity available via Identity.
+  # Set up in ApplicationController.
+  def self.current_identity=(identity)
+    Thread.current[:current_identity] = identity
   end
+
+  # References current_identity via Identity.
+  def self.current_identity
+    Thread.current[:current_identity]
+  end
+
+  def self.find_or_create_from_omniauth(auth_hash)
+
+    # Search for the identity based on the authentication data.
+    # Obtain a SocialProfile object that corresponds to the authentication data.
+    profile = SocialProfile.find_or_create_from_omniauth(auth_hash)
+
+    # Obtain identity with the following precedence.
+    # 1. Logged-in user's identity
+    # 2. Identity with a registered profile.
+    identity = current_identity || profile.identity
+
+    # 3. Identity with verified email from omniauth.
+    unless identity
+      if auth_hash.info.email
+        identity  = Identity.where(email: auth_hash.info.email).first
+        profile.save_with_identity(identity)
+      end
+    end
+
+    # 4. New identity with a temp email.
+    unless identity
+      # If identity has no verified email, give the identity a temp email address.
+      # Later, we can detect unregistered email based on TEMP_EMAIL_PREFIX.
+      # Password is not required for identities with social_profiles therefore
+      # it is OK to generate a random password for them.
+      temp_email = "#{Identity::TEMP_EMAIL_PREFIX}-#{Devise.friendly_token[0,20]}.com"
+      identity = Identity.new(email: auth_hash.info.email || temp_email,
+                              password: Devise.friendly_token[0,20])
+      identity.skip_confirmation!    # To postpone the delivery of confirmation email.
+      identity.save(validate: false) # Save the temp email to database, skipping validation.
+      profile.save_with_identity(identity)
+    end
+
+    identity
+  end
+
 end

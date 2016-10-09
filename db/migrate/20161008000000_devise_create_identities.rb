@@ -1,6 +1,10 @@
 class DeviseCreateIdentities < ActiveRecord::Migration[5.0]
   def change
     create_table :identities do |t|
+      ## Custom fields
+      t.references :backend_user, polymorphic: true, index: true
+      t.references :user,                            index: true
+
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""

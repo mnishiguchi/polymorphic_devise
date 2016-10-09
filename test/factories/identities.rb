@@ -3,6 +3,9 @@
 # Table name: identities
 #
 #  id                     :integer          not null, primary key
+#  backend_user_type      :string
+#  backend_user_id        :integer
+#  user_id                :integer
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string

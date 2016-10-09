@@ -6,10 +6,10 @@ nav.site_header
       | SH
       span.shrink owoff
     ul
-      - if logged_in?
+      - if identity_signed_in?
         li = link_to_user_page("My page") if current_user
         li = link_to_backend_user_page("Backdoor") if current_backend_user
-        li = link_to "Log out", logout_path, method: :delete
+        li = link_to "Log out", destroy_identity_session_path, method: :delete
       - else
         li = link_to "Home",  root_path
         li = link_to "Sign up", new_identity_registration_path

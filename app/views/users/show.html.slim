@@ -1,7 +1,7 @@
 - provide(:title, @user&.name)
 
 h1.page-header 
-  = @user&.name
+  = @user&.name || "User ##{@user.id}"
 
 h3 Registration information (Identity)
 
@@ -11,8 +11,6 @@ h3 Registration information (Identity)
       thead
         tr
           th id
-          th first_name
-          th last_name
           th email
           th type
           th backend_user_id
@@ -20,8 +18,6 @@ h3 Registration information (Identity)
       tbody
         tr
           td = @user.identity.id
-          td = @user.identity.first_name
-          td = @user.identity.last_name
           td = @user.identity.email
           td = @user.identity.backend_user_type&.underscore&.humanize || "General user"
           td = @user.identity.backend_user_id || "N/A"

@@ -3,12 +3,7 @@ module ApplicationHelper
   # Returns the full title on a per-page basis.
   def full_title(page_title="")
     base_title = "Apartment showoff"
-
-    if page_title.empty?
-      base_title
-    else
-      "#{page_title} | #{base_title}"
-    end
+    page_title.empty? ? base_title : "#{page_title} | #{base_title}"
   end
 
   # Stores the URL that a user wants to access.
@@ -40,5 +35,34 @@ module ApplicationHelper
       image_tag(image_urls.sample, size: options[:size] + border,
         alt: user.email, class: "gravatar")
     end
+  end
+
+  def current_user
+    current_identity&.user
+  end
+
+  def current_backend_user
+    current_identity&.backend_user
+  end
+
+  def link_to_user_page(text, options={})
+    link_to(text, (current_user ? user_url(current_user) : root_url))
+  end
+
+  def link_to_backend_user_page(text, options={})
+    url = if current_backend_user
+            helper = "#{current_backend_user.class.name.underscore}_path"
+            send(helper, current_backend_user)
+          else
+            root_url
+          end
+    link_to(text, url)
+  end
+
+  # Returns an image tag for the given user with one of his/her
+  # social profile image if any.
+  def social_profile_image(profile, options = { size: 80 })
+    return if profile.nil?
+    image_tag(profile.image_url, size: options[:size], alt: profile.user.email)
   end
 end
