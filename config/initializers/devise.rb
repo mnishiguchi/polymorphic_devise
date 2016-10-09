@@ -6,13 +6,27 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '1d8e8b196dac395b6b3659eb52efd6ba2d0ceeabfd8a880d98fe0fd34ebc93019cc7eeefaa745eb84fadc7c1d8c4671bf7033accad105f76886ade7c135c3143'
+  config.secret_key = YAML.load_file("#{Rails.root}/config/devise_secrets.yml")[Rails.env]["secret_key"]
+
+  # ==> OmniAuth
+  # Add a new OmniAuth provider. Check the wiki for more information on setting
+  # up on your models and hooks.
+  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :facebook,
+    Rails.application.secrets.facebook_key,
+    Rails.application.secrets.facebook_secret
+  config.omniauth :google_oauth2,
+    Rails.application.secrets.google_key,
+    Rails.application.secrets.google_secret
+  config.omniauth :twitter,
+    Rails.application.secrets.twitter_key,
+    Rails.application.secrets.twitter_secret
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'no-reply@polymorphic-devise.herokuapp.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -108,7 +122,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '5ae2b77fb791acf67e34a82d30c4e8fab8bae673ee7953028b5a653a605f3bd883b617e8fdfdf36b3f7b74715da5682534da74146ef3b6e566e1ffc36a9c47ae'
+  # config.pepper = 'ca31efeb5ba9b2ed5bf5975231baf71369f85df40b9de8e0e33594452d6200aa05c3453a1e103b2faa5105adf9f81e4b98a22378e6b543b1670697e1ca0098ae'
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
@@ -220,7 +234,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  # config.scoped_views = false
+  # config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
@@ -243,11 +257,6 @@ Devise.setup do |config|
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
-
-  # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
