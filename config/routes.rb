@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'social_profiles/destroy'
+
   # Authentication
   devise_for :identities,
     controllers: {
@@ -16,6 +18,10 @@ Rails.application.routes.draw do
   # Ask for email address after successful OAuth.
   match "/identities/:id/finish_signup" => "identities#finish_signup",
     via: [:get, :patch], as: :identity_finish_signup
+
+  # Soial profiles
+  resources :social_profiles
+
 
   # Frontend users
   resources :users

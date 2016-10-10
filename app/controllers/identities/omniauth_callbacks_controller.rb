@@ -16,20 +16,18 @@ class Identities::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
 
       # Check if identity is alreadly signed in.
       if identity_signed_in?
-        # Create a social profile from auth and ssociate that with current identity.
+        # Create a social profile from auth and associate that with current identity.
         profile = SocialProfile.find_or_create_from_omniauth(@auth_hash)
-        profile.associate_with_identity(@current_identity)
-        flash[:success] = "Connected to #{formatted_provider_name(@auth_hash.provider)}."
+        profile.save_with_identity(current_identity)
+        set_flash_message!(:notice, :connected, kind: SocialProfile.format_provider_name(@auth_hash.provider))
         redirect_to(edit_identity_registration_url) and return
       end
 
-      # Obtain identity by auth data.
+      # Obtain identity for this auth info.
       @identity = Identity.find_or_create_from_omniauth(@auth_hash)
-
-      # Obtain identity by email or create a new identity.
       if @identity.persisted? && @identity.email_verified?
         sign_in @identity
-        flash[:success] = "Successfully authenticated from #{SocialProfile.format_provider_name(@auth_hash.provider)} account."
+        set_flash_message!(:notice, :success, kind: SocialProfile.format_provider_name(@auth_hash.provider))
         redirect_back_or root_url
       else
         @identity.reset_confirmation!

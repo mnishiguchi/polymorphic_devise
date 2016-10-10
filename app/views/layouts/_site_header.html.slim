@@ -1,16 +1,17 @@
-nav.site_header
+.site_header
   .container
     a#logo href="#{root_path}"
       | A
       span.shrink partment
       | SH
       span.shrink owoff
-    ul
-      - if identity_signed_in?
-        li = link_to_user_page("My page") if current_user
-        li = link_to_backend_user_page("Backdoor") if current_backend_user
-        li = link_to "Log out", destroy_identity_session_path, method: :delete
-      - else
+    - if identity_signed_in?
+      .nav-item
+        = current_identity.email if current_identity
+        .badge = current_identity&.backend_user_type || "User"
+      = render "layouts/logged_in_dropdown"
+    - else
+      ul.non-logged-in
         li = link_to "Home",  root_path
         li = link_to "Sign up", new_identity_registration_path
         li = link_to "Log in", new_identity_session_path

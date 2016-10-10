@@ -15,18 +15,14 @@ main {
 }
 
 .flash_message.alert {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1001;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // z-index: 1001;
   width: 100vw;
   margin-bottom: 0;
-  opacity: .9;
-}
-
-#flash_message_spacer {
-  display: block;
-  height: 54px;
+  opacity: .95;
+  min-height: 58px;
 }
 
 .turbolinks-progress-bar {
@@ -75,29 +71,49 @@ main {
     }
   }
 
-  nav {
+  .nav-item {
+    display: block;
+    color: white;
     height: 45px;
-    line-height: 45px;
-    background: black;
+    line-height: 1;
+    padding: 24px 0 0 16px;
   }
-  ul {
+
+  ul.non-logged-in {
     display: flex;
     justify-content: flex-end;
     height: 45px;
     line-height: 45px;
-  }
-  li {
-    list-style: none;
-    a {
-      display: block;
-      color: white;
-      height: 45px;
-      line-height: 1;
-      padding: 24px 0 0 16px;
+    li {
+      list-style: none;
+      a {
+        display: block;
+        color: white;
+        height: 45px;
+        line-height: 1;
+        padding: 24px 0 0 16px;
+      }
     }
   }
 }
 
+.gravatar_dropdown {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  a {
+    color: $gray_1;
+    text-decoration: none;
+  }
+  ul {
+    position: relative;
+    top: 55px;
+    left: 65px;
+  }
+  .dropdown-menu {
+    right: 0;
+  }
+}
 
 .gravatar_link {
   padding: 0 !important;

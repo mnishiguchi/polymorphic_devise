@@ -1,10 +1,10 @@
-= provide(:title, "Sign in")
+= provide(:title, "Log in")
 
 .row
   .col-sm-offset-3.col-sm-6
 
     h2
-      | Sign in
+      | Log in
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .form-inputs
         = f.input :email, required: false, autofocus: true
@@ -12,7 +12,7 @@
         = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
       .form-group
         .btn-group
-          = f.button :submit, "Sign in with password", class: "btn btn-primary outline login_submit", title: "Sign in"
+          = f.button :submit, "Log in with password", class: "btn btn-primary outline login_submit", title: "Log in"
 
           p or continue with
           = render 'devise/shared/omniauth_buttons'

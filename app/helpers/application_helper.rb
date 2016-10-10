@@ -63,6 +63,6 @@ module ApplicationHelper
   # social profile image if any.
   def social_profile_image(profile, options = { size: 80 })
     return if profile.nil?
-    image_tag(profile.image_url, size: options[:size], alt: profile.user.email)
+    image_tag(profile.image_url, size: options[:size], alt: profile.identity.email)
   end
 end
