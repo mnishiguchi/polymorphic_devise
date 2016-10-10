@@ -65,7 +65,7 @@ class Identity < ApplicationRecord
   end
 
   # Used when we want to detect the email duplication error after form submission.
-  def email_exists_in_database?
+  def duplicate_email?
     (errors.messages.size == 1) && (errors.messages[:email].first == "has already been taken")
   end
 
@@ -90,13 +90,19 @@ class Identity < ApplicationRecord
   end
 
   # Merges and archives the old account.
-  def merge_old_identity!(old_user)
-    self.merge_social_profiles(old_user) unless old_user.social_profiles.empty?
-    old_user.archive!
+  def merge_old_identity!(old_identity)
+    # Merge social profiles
+    self.merge_social_profiles(old_identity) unless old_identity.social_profiles.empty?
+    old_identity.archive!
 
+    # Merge user/backend_user information.
     # Set the total sign in count on the user.
-    total_sign_in_count = self.sign_in_count + old_user.sign_in_count
-    self.update_column(:sign_in_count, total_sign_in_count)
+    # Carry over the backend_user from the old account.
+    total_sign_in_count = self.sign_in_count + old_identity.sign_in_count
+    self.update_columns(user_id:           old_identity.user_id,
+                        backend_user_id:   old_identity.backend_user_id,
+                        backend_user_type: old_identity.backend_user_type,
+                        sign_in_count:     total_sign_in_count)
 
     # TODO: What else do we want to merge?
   end

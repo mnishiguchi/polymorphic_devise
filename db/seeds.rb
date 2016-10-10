@@ -18,6 +18,7 @@ AccountExecutive.destroy_all
 Admin.destroy_all
 User.destroy_all
 Identity.destroy_all
+SocialProfile.destroy_all
 
 
 # ---

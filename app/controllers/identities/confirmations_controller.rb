@@ -18,7 +18,7 @@ class Identities::ConfirmationsController < Devise::ConfirmationsController
       sign_in(@identity)
       set_flash_message!(:notice, :confirmed)
       redirect_to root_url
-    elsif @identity.email_exists_in_database?
+    elsif @identity.duplicate_email?
       # If the same email is in the database and the old user account has no
       # social profiles associated with it, sign in the user with new account
       # and archive the old one by marking its email.

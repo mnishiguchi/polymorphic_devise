@@ -7,7 +7,7 @@ class IdentitiesController < ApplicationController
 
     if request.patch?
       @identity.skip_confirmation_notification!
-      if finish_signed_up_but_email_not_confirmed? || @identity.email_exists_in_database?
+      if finish_signed_up_but_email_not_confirmed? || @identity.duplicate_email?
         @identity.send_confirmation_instructions
         flash[:info] = 'We sent you a link to sign in. Please check your inbox.'
         redirect_to root_url
