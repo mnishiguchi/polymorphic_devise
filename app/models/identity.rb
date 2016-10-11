@@ -54,6 +54,10 @@ class Identity < ApplicationRecord
     super || create_user
   end
 
+  def save_social_profile(profile)
+    profile.save_with_identity(self)
+  end
+
   # Returns a social profile object with the specified provider if any.
   def social_profile(provider)
     social_profiles.select{ |sp| sp.provider == provider.to_s }.first
@@ -132,8 +136,7 @@ class Identity < ApplicationRecord
     # 3. Identity with verified email from omniauth.
     unless identity
       if auth_hash.info.email
-        identity  = Identity.where(email: auth_hash.info.email).first
-        profile.save_with_identity(identity)
+        Identity.where(email: auth_hash.info.email).first.save_social_profile(profile)
       end
     end
 
@@ -144,11 +147,11 @@ class Identity < ApplicationRecord
       # Password is not required for identities with social_profiles therefore
       # it is OK to generate a random password for them.
       temp_email = "#{Identity::TEMP_EMAIL_PREFIX}-#{Devise.friendly_token[0,20]}.com"
-      identity = Identity.new(email: auth_hash.info.email || temp_email,
+      identity = Identity.new(email:    auth_hash.info.email || temp_email,
                               password: Devise.friendly_token[0,20])
       identity.skip_confirmation!    # To postpone the delivery of confirmation email.
       identity.save(validate: false) # Save the temp email to database, skipping validation.
-      profile.save_with_identity(identity)
+      identity.save_social_profile(profile)
     end
 
     identity
