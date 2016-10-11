@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # Soial profiles
   resources :social_profiles
 
-  # Frontend user
+  # Frontend user (singular)
   resource :user
 
   # Backend users
