@@ -55,7 +55,7 @@ class Identity < ApplicationRecord
   end
 
   def save_social_profile(profile)
-    profile.save_with_identity(self)
+    profile.save_identity(self)
   end
 
   # Returns a social profile object with the specified provider if any.
@@ -70,12 +70,12 @@ class Identity < ApplicationRecord
 
   # Used when we want to detect the email duplication error after form submission.
   def duplicate_email?
-    (errors.messages.size == 1) && (errors.messages[:email].first == "has already been taken")
+    (errors.messages.size == 1) && errors.messages[:email].first =~ /taken/
   end
 
   # Used when we want to detect the "already confirled" error after form submission.
   def email_already_confirmed?
-    (errors.messages.size == 1) && (errors.messages[:email].first == "was already confirmed")
+    (errors.messages.size == 1) && errors.messages[:email].first =~ /already confirmed/
   end
 
   # Puts the user into the unconfirmed state.
@@ -90,7 +90,7 @@ class Identity < ApplicationRecord
 
   # Associates social profiles of another user to this user.
   def merge_social_profiles(other)
-    other.social_profiles.each { |profile| profile.save_with_identity(self) }
+    other.social_profiles.each { |profile| profile.save_identity(self) }
   end
 
   # Merges and archives the old account.

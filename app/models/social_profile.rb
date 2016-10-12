@@ -20,7 +20,7 @@
 #
 
 class SocialProfile < ApplicationRecord
-  
+
   belongs_to :identity
 
   store      :others
@@ -32,7 +32,7 @@ class SocialProfile < ApplicationRecord
     self.update_attributes(params_from_omniauth(auth)) if valid_omniauth?(auth)
   end
 
-  def save_with_identity(identity)
+  def save_identity(identity)
     # NOTE: Profile identity and the specified identity must match.
     self.update!(identity_id: identity.id) unless self.identity == identity
   end
