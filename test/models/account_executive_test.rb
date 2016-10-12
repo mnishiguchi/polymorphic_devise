@@ -10,12 +10,11 @@
 
 require "test_helper"
 
-class AccountExecutiveTest < ActiveSupport::TestCase
-  def account_executive
-    @account_executive ||= AccountExecutive.new
-  end
+describe AccountExecutive do
 
-  def test_valid
-    assert account_executive.valid?
+  subject { create(:account_executive) }
+
+  it "should be valid" do
+    assert subject.valid?
   end
 end

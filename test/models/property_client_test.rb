@@ -11,12 +11,11 @@
 
 require "test_helper"
 
-class PropertyClientTest < ActiveSupport::TestCase
-  def property_client
-    @property_client ||= PropertyClient.new
-  end
+describe PropertyClient do
 
-  def test_valid
-    assert property_client.valid?
+  subject { create(:management_client) }
+
+  it "should be valid" do
+    assert subject.valid?
   end
 end

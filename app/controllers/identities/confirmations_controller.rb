@@ -17,7 +17,7 @@ class Identities::ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       sign_in(@identity)
       set_flash_message!(:notice, :confirmed)
-      redirect_to root_url
+      redirect_to "/"
     elsif @identity.duplicate_email?
       # If the same email is in the database and the old user account has no
       # social profiles associated with it, sign in the user with new account
@@ -33,11 +33,11 @@ class Identities::ConfirmationsController < Devise::ConfirmationsController
 
       sign_in(@identity)
       set_flash_message!(:notice, :confirmed)
-      redirect_to root_url
+      redirect_to "/"
     else
       # If there are other errors, we cannot log in the user.
-      flash[:danger] = "Error confirming email."
-      redirect_to root_url
+      flash[:danger] = I18n.t("devise.confirmations.failure")
+      redirect_to "/"
     end
   end
 

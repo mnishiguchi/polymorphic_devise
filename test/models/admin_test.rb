@@ -10,12 +10,11 @@
 
 require "test_helper"
 
-class AdminTest < ActiveSupport::TestCase
-  def admin
-    @admin ||= Admin.new
-  end
+describe Admin do
 
-  def test_valid
-    assert admin.valid?
+  subject { create(:admin) }
+
+  it "should be valid" do
+    assert subject.valid?
   end
 end

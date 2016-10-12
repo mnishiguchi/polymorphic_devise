@@ -10,6 +10,6 @@
 
 FactoryGirl.define do
   factory :admin do
-    
+    sequence(:name)    { |n| "admin_#{n}"}
   end
 end

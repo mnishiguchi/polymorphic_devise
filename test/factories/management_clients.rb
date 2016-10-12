@@ -9,8 +9,9 @@
 #  updated_at           :datetime         not null
 #
 
+
 FactoryGirl.define do
   factory :management_client do
-    
+    sequence(:name)    { |n| "management_client_#{n}"}
   end
 end
