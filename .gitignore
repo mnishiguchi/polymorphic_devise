@@ -18,3 +18,8 @@
 
 # Ignore all the compiled assets.
 public/*
+
+coverage/*
+coverage/.last_run.json
+coverage/.resultset.json
+coverage/.resultset.json.lock
