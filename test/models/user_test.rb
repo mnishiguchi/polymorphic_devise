@@ -10,12 +10,11 @@
 
 require "test_helper"
 
-class UserTest < ActiveSupport::TestCase
-  def user
-    @user ||= User.new
-  end
+describe User do
 
-  def test_valid
-    assert user.valid?
+  subject { create(:management_client) }
+
+  it "should be valid" do
+    assert subject.valid?
   end
 end

@@ -55,7 +55,7 @@ class Identity < ApplicationRecord
   end
 
   def save_social_profile(profile)
-    profile.save_identity(self)
+    profile.update_with_identity(self)
   end
 
   # Returns a social profile object with the specified provider if any.
@@ -90,7 +90,7 @@ class Identity < ApplicationRecord
 
   # Associates social profiles of another user to this user.
   def merge_social_profiles(other)
-    other.social_profiles.each { |profile| profile.save_identity(self) }
+    other.social_profiles.each { |profile| profile.update_with_identity(self) }
   end
 
   # Merges and archives the old account.
@@ -136,7 +136,7 @@ class Identity < ApplicationRecord
     # 3. Identity with verified email from omniauth.
     unless identity
       if auth_hash.info.email
-        Identity.where(email: auth_hash.info.email).first.save_social_profile(profile)
+        Identity.where(email: auth_hash.info.email).first&.save_social_profile(profile)
       end
     end
 

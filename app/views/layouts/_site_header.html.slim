@@ -10,8 +10,3 @@
         = current_identity.email if current_identity
         .badge = current_identity&.backend_user_type || "User"
       = render "layouts/logged_in_dropdown"
-    - else
-      ul.non-logged-in
-        li = link_to "Home",  root_path
-        li = link_to "Sign up", new_identity_registration_path
-        li = link_to "Log in", new_identity_session_path

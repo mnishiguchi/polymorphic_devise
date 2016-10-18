@@ -62,7 +62,7 @@ module ApplicationHelper
   # Returns an image tag for the given user with one of his/her
   # social profile image if any.
   def social_profile_image(profile, options = { size: 80 })
-    return if profile.nil?
+    return nil if profile.nil?
     image_tag(profile.image_url, size: options[:size], alt: profile.identity.email)
   end
 end

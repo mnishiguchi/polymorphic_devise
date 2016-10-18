@@ -88,19 +88,3 @@ Identity.create!(
   confirmed_at: Time.zone.now,
   backend_user: property_client
 )
-
-
-# ---
-# Create Masa as an admin who has a social account.
-# ---
-
-
-masatoshi = Admin.create!(
-  name: "Masatoshi"
-)
-Identity.create!(
-  email:        "nishiguchi.masa@gmail.com",
-  password:     "password",
-  confirmed_at: Time.zone.now,
-  backend_user: masatoshi
-)

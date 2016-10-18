@@ -1,9 +1,7 @@
 require "test_helper"
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
-  def test_home
-    get static_pages_home_url
-    assert_response :success
-  end
-
+  # it "must be a real test" do
+  #   flunk "Need real tests"
+  # end
 end

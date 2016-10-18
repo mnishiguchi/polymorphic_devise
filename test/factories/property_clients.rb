@@ -11,6 +11,6 @@
 
 FactoryGirl.define do
   factory :property_client do
-    
+    sequence(:name)    { |n| "property_client_#{n}"}
   end
 end

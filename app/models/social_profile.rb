@@ -29,10 +29,11 @@ class SocialProfile < ApplicationRecord
 
   def save_omniauth_info(auth)
     # Create params in correct format, then update the profile.
-    self.update_attributes(params_from_omniauth(auth)) if valid_omniauth?(auth)
+    params = params_from_omniauth(auth)
+    self.update_attributes(params) if valid_omniauth?(auth) && params.present?
   end
 
-  def save_identity(identity)
+  def update_with_identity(identity)
     # NOTE: Profile identity and the specified identity must match.
     self.update!(identity_id: identity.id) unless self.identity == identity
   end
@@ -56,6 +57,7 @@ class SocialProfile < ApplicationRecord
 
     # Returns params based on the specified authentication data.
     def params_from_omniauth(auth)
+      return nil if auth['provider'].blank? || auth['provider'] == "default"
       class_name = auth['provider'].classify  # Facebook, Twitter etc.
       "SocialProfileParams::#{class_name}".constantize.new(auth).params
     end

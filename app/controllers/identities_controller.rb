@@ -1,7 +1,7 @@
 class IdentitiesController < ApplicationController
 
-  # GET   /identitys/:id/finish_signup - Add email form
-  # PATCH /identitys/:id/finish_signup - Update identity data based on the form
+  # GET   /auth/:id/finish_signup - Add email form
+  # PATCH /auth/:id/finish_signup - Update identity data based on the form
   def finish_signup
     @identity = Identity.find(params[:id])
 
@@ -9,8 +9,8 @@ class IdentitiesController < ApplicationController
       @identity.skip_confirmation_notification!
       if finish_signed_up_but_email_not_confirmed? || @identity.duplicate_email?
         @identity.send_confirmation_instructions
-        flash[:info] = 'We sent you a link to sign in. Please check your inbox.'
-        redirect_to root_url
+        flash[:info] = I18n.t("devise.confirmations.send_instructions")
+        redirect_to "/"
       end
     end
   end

@@ -11,12 +11,11 @@
 
 require "test_helper"
 
-class ManagementClientTest < ActiveSupport::TestCase
-  def management_client
-    @management_client ||= ManagementClient.new
-  end
+describe ManagementClient do
 
-  def test_valid
-    assert management_client.valid?
+  subject { create(:management_client) }
+
+  it "should be valid" do
+    assert subject.valid?
   end
 end

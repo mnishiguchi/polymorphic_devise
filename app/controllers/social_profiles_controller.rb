@@ -8,7 +8,7 @@ class SocialProfilesController < ApplicationController
 
   def destroy
     @profile.destroy
-    flash[:success] = "Disconnected from #{@profile.formatted_provider_name}"
+    flash[:success] = I18n.t("devise.omniauth_callbacks.disconnected", kind: @profile.formatted_provider_name)
     redirect_to edit_identity_registration_url
   end
 
