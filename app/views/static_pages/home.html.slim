@@ -1,6 +1,7 @@
 - if identity_signed_in?
   .jumbotron
     h2 You are logged in.
+    = link_to "Show all registered users", identities_path
 
 - else
   .jumbotron

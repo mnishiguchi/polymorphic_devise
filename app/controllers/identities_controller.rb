@@ -1,4 +1,28 @@
 class IdentitiesController < ApplicationController
+  before_filter :authenticate_identity!
+  after_action :verify_authorized
+
+  def index
+    @identities = Identity.all
+    authorize @identities
+  end
+
+  def show
+    @identity = Identity.find(params[:id])
+    authorize @identity
+  end
+
+  def edit
+
+  end
+
+  def update
+
+  end
+
+  def destroy
+
+  end
 
   # GET   /auth/:id/finish_signup - Add email form
   # PATCH /auth/:id/finish_signup - Update identity data based on the form

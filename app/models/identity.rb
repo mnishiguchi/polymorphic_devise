@@ -54,6 +54,38 @@ class Identity < ApplicationRecord
     super || create_user
   end
 
+
+  # ---
+  # For authrization
+  # ---
+
+
+  def backend_user?
+    backend_user_type.present?
+  end
+
+  def admin?
+    backend_user_type == "Admin"
+  end
+
+  def account_executive?
+    backend_user_type == "AccountExecutive"
+  end
+
+  def management_client?
+    backend_user_type == "ManagementClient"
+  end
+
+  def property_client?
+    backend_user_type == "PropertyClient"
+  end
+
+
+  # ---
+  # For Devise authentication
+  # ---
+
+
   def save_social_profile(profile)
     profile.update_with_identity(self)
   end
