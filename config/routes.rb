@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   match "/auth/:id/finish_signup" => "identities#finish_signup",
     via: [:get, :patch], as: :identity_finish_signup
 
+  # To demonstarate Pundit authorization
+  resources :identities
+
   # Soial profiles
   resources :social_profiles
 
