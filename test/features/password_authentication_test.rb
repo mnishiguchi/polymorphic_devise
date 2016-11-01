@@ -14,10 +14,12 @@ feature "password authentication" do
     click_on "Sign up"
     assert_content page, /sign up/i
 
-    fill_in "identity_email", with: identity_email
-    fill_in "identity_password", with: "password"
-    fill_in "identity_password_confirmation", with: "password"
-    click_on "Email me a link to sign in"
+    within('#signup_modal') do
+      fill_in "identity_email", with: identity_email
+      fill_in "identity_password", with: "password"
+      fill_in "identity_password_confirmation", with: "password"
+      click_on "Email me a link to sign in"
+    end
     assert_current_path "/"
 
     # Click on the confirmation link in the inbox.
