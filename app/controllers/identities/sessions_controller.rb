@@ -1,5 +1,7 @@
 class Identities::SessionsController < Devise::SessionsController
-# before_action :configure_sign_in_params, only: [:create]
+  # before_action :configure_sign_in_params, only: [:create]
+
+  respond_to :html, :js
 
   # GET /resource/sign_in
   # https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
@@ -10,9 +12,14 @@ class Identities::SessionsController < Devise::SessionsController
   end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    self.resource = warden.authenticate(auth_options)
+
+    if resource && resource.active_for_authentication?
+      sign_in(resource_name, resource)
+      redirect_to root_url
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy

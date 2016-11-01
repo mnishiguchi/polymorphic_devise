@@ -65,4 +65,25 @@ module ApplicationHelper
     return nil if profile.nil?
     image_tag(profile.image_url, size: options[:size], alt: profile.identity.email)
   end
+
+
+  # ---
+  # Devise-related
+  # https://github.com/plataformatec/devise/wiki/How-To:-Display-a-custom-sign_in-form-anywhere-in-your-app
+  # ---
+
+
+  def resource_name
+    :identity
+  end
+
+
+  def resource
+    @resource ||= Identity.new
+  end
+
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:identity]
+  end
 end

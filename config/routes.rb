@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     },
     # https://github.com/plataformatec/devise#configuring-routes
     path: 'auth',
-    path_names: { sign_in: 'login', sign_out: 'logout' }
+    path_names: { sign_up: 'signup', sign_in: 'login', sign_out: 'logout' }
 
   # Ask for email address after successful OAuth.
   match "/auth/:id/finish_signup" => "identities#finish_signup",

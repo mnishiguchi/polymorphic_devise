@@ -1,0 +1,8 @@
+// http://guides.rubyonrails.org/working_with_javascript_in_rails.html#form-for
+// http://guides.rubyonrails.org/layouts_and_rendering.html#rendering-collections
+
+// Whether signup was Successful or unsuccessful, create.js.erb will be rendered.
+// After successful login, redirect to root_url.
+<% if identity_signed_in? %>
+  <% redirect_to root_url %>
+<% end %>
