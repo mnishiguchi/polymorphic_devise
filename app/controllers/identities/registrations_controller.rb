@@ -69,6 +69,8 @@ class Identities::RegistrationsController < Devise::RegistrationsController
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end
 
+  # https://github.com/plataformatec/devise/wiki/How-To:-Redirect-to-a-specific-page-on-successful-sign-up-(registration)
+
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)

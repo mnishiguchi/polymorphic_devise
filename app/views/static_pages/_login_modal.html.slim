@@ -1,11 +1,13 @@
-.modal-dialog [role="document"] 
+.modal-dialog [role="document"]
   .modal-content
     .modal-header
-      button.close [aria-label="Close" data-dismiss="modal" type="button"] 
+      button.close [aria-label="Close" data-dismiss="modal" type="button"]
         span [aria-hidden="true"]  &times;
-      h4#login_modal__label.modal-title Log in
+      h4#login_modal__label.modal-title
+        | Log in
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true) do |f|
       .modal-body
+          #login_modal__errors
           = f.input :email, required: false, autofocus: true
           = f.input :password, required: false
       .modal-footer

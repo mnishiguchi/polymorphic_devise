@@ -1,8 +1,10 @@
 // http://guides.rubyonrails.org/working_with_javascript_in_rails.html#form-for
 // http://guides.rubyonrails.org/layouts_and_rendering.html#rendering-collections
 
+// http://stackoverflow.com/questions/22689877/devise-ajax-login-sessionscreate-only-render-create-js-erb-when-it-succeed
 // Whether signup was Successful or unsuccessful, create.js.erb will be rendered.
-// After successful login, redirect to root_url.
+
 <% if identity_signed_in? %>
-  <% redirect_to root_url %>
+  $('#login_modal__target .close').click();
+  // then, redirected to '/'
 <% end %>

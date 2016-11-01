@@ -1,0 +1,14 @@
+// http://guides.rubyonrails.org/working_with_javascript_in_rails.html#form-for
+// http://guides.rubyonrails.org/layouts_and_rendering.html#rendering-collections
+// http://stackoverflow.com/questions/22689877/devise-ajax-login-sessionscreate-only-render-create-js-erb-when-it-succeed
+
+// This js.erb files is called when login was unsuccessful.
+
+// alert(
+//   '<%= j(I18n.t("devise.failure.invalid")) %>'
+// );
+
+// Show error message using flash because session does not have Active Records errors.
+$('#login_modal__errors').html('').append(
+  '<div class="alert alert-danger"><%= j(I18n.t("devise.failure.invalid")) %></div>'
+);
