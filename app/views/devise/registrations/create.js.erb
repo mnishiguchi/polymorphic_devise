@@ -7,12 +7,9 @@
     '<%= j(render "static_pages/signup_modal") %>'
   );
 <% else %>
-  // After successful signup, close the modal.
-  $('#signup_modal__target .close').click();
-
   // Set a message.
   <% flash[:info] = I18n.t("devise.confirmations.send_instructions") %>
-  $('#flash_message').html(
-    '<%= j(render "layouts/flash_message") %>'
-  );
+
+  // link_to is not available in a template so we use js equivalent here.
+  window.location.href="/"
 <% end %>
