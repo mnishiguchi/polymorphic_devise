@@ -21,21 +21,13 @@
               td= current_identity.sign_in_count
               td= current_identity.last_sign_in_at
 
+    .well
+      #edit_email
+        = render "edit_email"
 
     .well
-      .h3.page-header Email settings
-
-      = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-        = f.error_notification
-
-        .form-inputs
-          = f.input :email, required: true, autofocus: false, label: "Your email"
-          - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-            p Currently waiting confirmation for: #{resource.unconfirmed_email}
-
-        .form-group
-          = f.button :button, "Update", class: "submit btn btn-primary outline",
-          data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Processing..." }
+      #edit_password
+        = render "edit_password"
 
     .well
       .h3.page-header Connections

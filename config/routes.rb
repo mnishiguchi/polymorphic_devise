@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   resources :management_clients, only: [:show]
   resources :property_clients, only: [:show]
 
+  resource :password_reset, only: [:new, :edit, :update]
+
   root to: "static_pages#home"
 
   # For viewing delivered emails in development environment.
