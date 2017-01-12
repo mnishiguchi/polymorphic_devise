@@ -1,7 +1,7 @@
-.modal-dialog [role="document"] 
+.modal-dialog [role="document"]
   .modal-content
     .modal-header
-      button.close [aria-label="Close" data-dismiss="modal" type="button"] 
+      button.close [aria-label="Close" data-dismiss="modal" type="button"]
         span [aria-hidden="true"]  &times;
       h4#signup_modal__label.modal-title Sign up
     = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true) do |f|
@@ -15,6 +15,6 @@
         = f.button :submit, "Email me a link to sign in", class: "btn btn-primary"
         .well
           p or continue with
-          = render 'devise/shared/omniauth_buttons'
+          = render 'devise/shared/oauth_links'
         .well
           = render "devise/shared/links"
