@@ -1,5 +1,8 @@
 class EmailConfirmationsController < ApplicationController
 
+  # NOTE: We use GET and PUT/PATCH for this operation because we need to
+  # specify the id for a particulr identity.
+
   # GET   /email_confirmations/:id - Show email confirmation form
   def show
     @identity = Identity.find(params[:id])
