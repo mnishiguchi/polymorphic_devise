@@ -29,6 +29,8 @@
       #edit_password
         = render "edit_password"
 
+        p= "Password authenticated" if current_identity.password_updated_at
+
     .well
       .h3.page-header Connections
 

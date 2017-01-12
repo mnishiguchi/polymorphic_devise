@@ -26,3 +26,14 @@ email_confirmations GET       /email_confirmations email_confirmations#show
 - 3. User click on the log in link in his/her inbox
   + Update the user's email now that it is confirmed.
   + Log in this user.
+
+
+## Scenarios where user get a password registered
+
+- 1. Web developer manually create a record. <==
+- 2. Sign up
+  + `registrations#new`
+  + `confirmations#show` <==
+- 3. Forgot password
+  + `password#new`
+  + `password#edit` <==

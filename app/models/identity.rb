@@ -47,7 +47,7 @@ class Identity < ApplicationRecord
 
   # To handle temporary emails.
   TEMP_EMAIL_PREFIX = 'change@me'
-  TEMP_EMAIL_REGEX = /\Achange@me/
+  TEMP_EMAIL_REGEX  = /\Achange@me/
 
   # Returns the associated user if it exists. Otherwise creates and persists a new user.
   def user
@@ -155,7 +155,6 @@ class Identity < ApplicationRecord
   end
 
   def self.find_or_create_from_omniauth(auth_hash)
-
     # Search for the identity based on the authentication data.
     # Obtain a SocialProfile object that corresponds to the authentication data.
     profile = SocialProfile.find_or_create_from_omniauth(auth_hash)
@@ -180,7 +179,7 @@ class Identity < ApplicationRecord
       # it is OK to generate a random password for them.
       temp_email = "#{Identity::TEMP_EMAIL_PREFIX}-#{Devise.friendly_token[0,20]}.com"
       identity = Identity.new(email:    auth_hash.info.email || temp_email,
-                              password: Devise.friendly_token[0,20])
+                              password: Devise.friendly_token[0,20]) # temp password
       identity.skip_confirmation!    # To postpone the delivery of confirmation email.
       identity.save(validate: false) # Save the temp email to database, skipping validation.
       identity.save_social_profile(profile)
@@ -188,5 +187,4 @@ class Identity < ApplicationRecord
 
     identity
   end
-
 end
