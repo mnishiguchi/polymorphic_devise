@@ -14,8 +14,12 @@ module LoginUsersDemo
 
     # https://github.com/blowmage/minitest-rails
     config.generators do |g|
-      g.test_framework :minitest, spec: false, fixture: false
+      g.assets   = false
+      g.helpers  = false
+      g.jbuilder = false
       g.template_engine :slim
+      g.test_framework :minitest, spec: true, fixture: false
+      g.fixture_replacement :factory_girl, dir: 'test/factories'
     end
   end
 end
