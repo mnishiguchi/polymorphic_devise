@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     path_names: { sign_up: 'signup', sign_in: 'login', sign_out: 'logout' }
 
   # Ask for email address after successful OAuth.
-  # match "/auth/:id/finish_signup" => "identities#finish_signup",
-  #   via: [:get, :patch], as: :identity_finish_signup
+  # NOTE: We use GET and PUT/PATCH for this operation because we need to
+  # specify the id for a particulr identity.
   resources :email_confirmations, only: [:show, :update]
 
   # To demonstarate Pundit authorization

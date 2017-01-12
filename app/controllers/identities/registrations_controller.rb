@@ -32,8 +32,27 @@ class Identities::RegistrationsController < Devise::RegistrationsController
     # We determine update_type based on params keys so that we can render
     # a specific partial for that update_type.
     @update_type = identity_params[:current_password] ? :password : :email
-    
-    super
+
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    resource_updated = update_resource(resource, account_update_params)
+    yield resource if block_given?
+    if resource_updated
+      # http://www.rubydoc.info/github/plataformatec/devise/DeviseController%3Anavigational_formats
+      # http://www.rubydoc.info/github/plataformatec/devise/Devise/Controllers/Helpers#is_flashing_format%3F-instance_method
+      # if is_flashing_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      # end
+      bypass_sign_in resource, scope: resource_name
+      respond_with resource, location: after_update_path_for(resource)
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
   end
 
   private
