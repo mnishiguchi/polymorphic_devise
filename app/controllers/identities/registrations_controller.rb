@@ -65,6 +65,8 @@ class Identities::RegistrationsController < Devise::RegistrationsController
       resource.update_without_password(params)
     end
 
+    # FIXME: Use devise_parameter_sanitizer.permit in ApplicationController instead. See docs
+    # https://github.com/plataformatec/devise#strong-parameters
     def identity_params
       # We use the keys email and currrent_password to distinguish between each other.
       accessible = [ :email, :current_password ]
