@@ -37,3 +37,18 @@ email_confirmations GET       /email_confirmations email_confirmations#show
 - 3. Forgot password
   + `password#new`
   + `password#edit`
+
+## Strong Parameters
+- [https://github.com/plataformatec/devise#strong-parameters](https://github.com/plataformatec/devise#strong-parameters)
+
+```rb
+class ApplicationController < ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+  end
+end
+```
